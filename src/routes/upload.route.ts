@@ -1,14 +1,13 @@
 import { Request as ExRequest, Router } from 'express'
 import uploadBooks from '../middlwares/uploadBooks'
-import handleBookname from '../utils/handleBookname'
+import handleBookname, { dividerId } from '../utils/handleBookname'
+import { getBookNameByRef, getUploadedBook } from '../controllers/upload/book.controller'
 
 const router = Router()
 
-router.post('/upload/book', uploadBooks.single('book'), (req: any, res) => {
-  if (!req.file) return res.status(400).json({ msg: 'No uploaded file' })
-  
-  res.json(`http://localhost:5000/${handleBookname(req.file.filename)}`) //возвращает ссылку на скачанный файл
-})
+router.post('/upload/book', uploadBooks.single('book'), getUploadedBook)
+
+router.post('/upload/book/get-name', getBookNameByRef)
 
 export default router
 

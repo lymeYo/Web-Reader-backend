@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import { getProfile, updateProfile, dropBook } from '../controllers/user/profile.controller'
+import { getProfile } from '../controllers/user/profile.controller'
+import { getBooks, addBook, removeBook, openBook, updateUserBook } from '../controllers/user/books.controller'
 import passport from 'passport'
 
 const router = Router()
@@ -9,15 +10,31 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getProfile,
 )
-router.patch(
-  '/user/profile',
+
+router.get(
+  '/user/books',
   passport.authenticate('jwt', { session: false }),
-  updateProfile,
+  getBooks,
+)
+router.post(
+  '/user/books',
+  passport.authenticate('jwt', { session: false }),
+  addBook,
+)
+router.post(
+  '/user/books/open',
+  passport.authenticate('jwt', { session: false }),
+  openBook,
 )
 router.delete(
-  '/user/drop-book',
+  '/user/books',
   passport.authenticate('jwt', { session: false }),
-  dropBook,
+  removeBook,
+)
+router.patch(
+  '/user/books', 
+  passport.authenticate('jwt', { session: false }),
+  updateUserBook
 )
 
 export default router

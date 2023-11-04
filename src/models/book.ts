@@ -12,38 +12,43 @@ type TbookInfo = {
   cfi: string
 }
 
-export interface UserModel
+export interface BookModel
   extends Model<
-    InferAttributes<UserModel>,
-    InferCreationAttributes<UserModel>
+    InferAttributes<BookModel>,
+    InferCreationAttributes<BookModel>
   > {
   // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>
-  username: string
-  password: string
-  openedBookId: number | null
+  userId: number,
+  bookRef: string,
+  epubCfi: string | null,
+  bookName: string
 }
 
-const User = sequelize.define<UserModel>('User', {
+const Book = sequelize.define<BookModel>('Books', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   },
-  username: {
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  bookRef: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  password: {
+  epubCfi: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  bookName: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  openedBookId: {
-    type: DataTypes.NUMBER,
-    allowNull: true
   }
 }, {
   timestamps: false
 })
 
-export default User
+export default Book
