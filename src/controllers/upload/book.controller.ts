@@ -13,8 +13,8 @@ export const getUploadedBook = async (req: any, res: any) => {
 
 export const getBookNameByRef = (req: any, res: any) => {
   const { bookRef } = req.body
-  
-  const bookName = bookRef?.split(dividerId)[1]
+  const ext = '.epub'
+  const bookName = bookRef?.split(dividerId)[1].split(ext)[0]
 
   res.json(bookName) //возвращает ссылку на скачанный файл
 }
